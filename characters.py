@@ -13,6 +13,24 @@ class Char:
         self.name = name
         self.current_life = self.max_life_point
         self.inventory = []
+        self.random_height = randint(170, 190)
+        self.random_weight = randint(70, 90)
+
+    def get_height(self):
+        return self._random_height
+
+    def set_height(self, value):
+        self._random_height = value
+
+    height = property(get_height, set_height)
+
+    def get_weight(self):
+        return self._random_weight
+
+    def set_weight(self, value):
+        self._random_weighht = value
+
+    weight = property(get_weight, set_height)
 
     def rolls_dice(self):
         magic_dice = randint(1, self.magic_dice)
@@ -58,6 +76,11 @@ class Wizard(Char):
 
         if dmg < magic_attack2:
             return ["magic", magic_attack2]
+        elif weapon == "sword":
+            dmg += (self.random_height + self.random_weight) // 40
+            return [weapon, dmg]
+        elif weapon == "bow":
+            dmg += (self.random_height - 170) % 3
         else:
             return [weapon, dmg]
 
@@ -74,6 +97,10 @@ class Archer(Char):
             result_attack[1] += 1
             print(self.name + " did 1 bonus DMG cause use " + str(result_attack[0]) + ". Total = " + str(
                 result_attack[1]) + " DMG")
+            if result_attack[0] == "sword":
+                result_attack[1] += (self.random_height) // 40
+            elif result_attack[0] == "magic":
+                result_attack[1] += (self.random_weight) // 20
         return result_attack
 
 
@@ -82,3 +109,14 @@ class Warrior(Char):
     magic_dice = 8
     sword_dice = 12
     bow_dice = 8
+
+    def attack(self):
+        result_attack = super().attack()
+
+        if result_attack[0] == "magic":
+            result_attack[1] += (self.random_weight) // 30
+
+        elif result_attack[0] == "bow":
+            result_attack[1] += (self.random_height - 170) % 3
+
+        return result_attack

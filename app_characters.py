@@ -6,6 +6,7 @@ def main():
     merlin = char.Wizard("Merlin")
     weapon, dmg = merlin.attack()
 
+
     stark = char.Wizard("Stark")
 
     stark.defense(weapon, dmg)
