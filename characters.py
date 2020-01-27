@@ -1,15 +1,15 @@
 from random import randint
 
 
-class Wizard:
-    max_life_point = 15
+class Char:
+    max_life_point = 12
     magic_dice = 12
     sword_dice = 8
     bow_dice = 10
     attack_points = 0
     defense_points = 0
 
-    def __init__(self, name, ):
+    def __init__(self, name):
         self.name = name
         self.current_life = self.max_life_point
         self.inventory = []
@@ -27,7 +27,6 @@ class Wizard:
         print(self.name + " use " + weapon + " who's done " + str(dmg) + " DMG")
         return result_attack
 
-
     def defense(self, weapon, dmg):
 
         global damages_done
@@ -44,10 +43,42 @@ class Wizard:
             print(self.name + " defend himself with " + weapon + " who defend " + str(def_roll) + " DMG")
             print(self.name + " has defend so lost no HP")
 
-
         print(self.name + " got " + str(self.current_life) + " HP ")
         return self.current_life
 
 
+class Wizard(Char):
+    magic_dice = 12
+    sword_dice = 8
+    bow_dice = 10
+
+    def attack(self):
+        weapon, dmg = super().attack()
+        magic_attack2 = randint(1, self.magic_dice)
+
+        if dmg < magic_attack2:
+            return ["magic", magic_attack2]
+        else:
+            return [weapon, dmg]
 
 
+class Archer(Char):
+    magic_dice = 10
+    sword_dice = 8
+    bow_dice = 12
+
+    def attack(self):
+        result_attack = super().attack()
+
+        if result_attack[0] in ["sword", "magic"]:
+            result_attack[1] += 1
+            print(self.name + " did 1 bonus DMG cause use " + str(result_attack[0]) + ". Total = " + str(
+                result_attack[1]) + " DMG")
+        return result_attack
+
+
+class Warrior(Char):
+    max_life_point = 16
+    magic_dice = 8
+    sword_dice = 12
+    bow_dice = 8
