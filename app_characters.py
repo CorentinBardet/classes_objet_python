@@ -1,23 +1,29 @@
 import characters as char
 
 
+
 def main():
 
-    merlin = char.Wizard("Merlin")
-    weapon, dmg = merlin.attack()
+    merlin = char.ElfeWizard("Merlin")
+    attack_result = merlin.attack()
+    weapon = attack_result["weapon"]
+    dmg = attack_result["dmg"]
 
-
-    stark = char.Wizard("Stark")
-
+    stark = char.DwarfWizard("Stark")
     stark.defense(weapon, dmg)
-    weapon, dmg = stark.attack()
+    attack_result = stark.attack()
+    weapon = attack_result["weapon"]
+    dmg = attack_result["dmg"]
+
     merlin.defense(weapon, dmg)
 
+
     eve = char.Archer("Eve")
-    weapon, dmg = eve.attack()
+    attack_result = eve.attack()
+    weapon = attack_result["weapon"]
+    dmg = attack_result["dmg"]
 
     garen = char.Warrior("Garen")
-
     garen.defense(weapon, dmg)
 
 
